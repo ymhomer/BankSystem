@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="BankDB" Class="BankDBDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\BankDB.mdf;Integrated Security=True" SettingsObjectName="BankSystem.My.MySettings" SettingsPropertyName="BankDBConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Account" Member="Accounts">
+    <Type Name="Account">
+      <Column Name="accountID" Type="System.String" DbType="VarChar(6) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="description" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="balance" Type="System.Decimal" DbType="Decimal(7,2)" CanBeNull="true" />
+      <Association Name="Account_Customer" Member="Customers" ThisKey="accountID" OtherKey="accountID" Type="Customer" />
+      <Association Name="Account_Loan" Member="Loans" ThisKey="accountID" OtherKey="accountID" Type="Loan" />
+      <Association Name="Account_TransactionH" Member="TransactionHs" ThisKey="accountID" OtherKey="accountID" Type="TransactionH" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Customer" Member="Customers">
+    <Type Name="Customer">
+      <Column Name="custID" Type="System.String" DbType="VarChar(6) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="custName" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="userName" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="password" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="address" Type="System.String" DbType="VarChar(40)" CanBeNull="true" />
+      <Column Name="phone" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="email" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="salary" Type="System.Decimal" DbType="Decimal(7,2)" CanBeNull="true" />
+      <Column Name="accountID" Type="System.String" DbType="VarChar(6)" CanBeNull="true" />
+      <Association Name="Customer_Payment" Member="Payments" ThisKey="custID" OtherKey="custID" Type="Payment" />
+      <Association Name="Account_Customer" Member="Account" ThisKey="accountID" OtherKey="accountID" Type="Account" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Loan" Member="Loans">
+    <Type Name="Loan">
+      <Column Name="loanID" Type="System.String" DbType="VarChar(6) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="loanType" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="amountBorrowed" Type="System.Decimal" DbType="Decimal(7,2)" CanBeNull="true" />
+      <Column Name="accountID" Type="System.String" DbType="VarChar(6)" CanBeNull="true" />
+      <Association Name="Account_Loan" Member="Account" ThisKey="accountID" OtherKey="accountID" Type="Account" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Payment" Member="Payments">
+    <Type Name="Payment">
+      <Column Name="paymentID" Type="System.String" DbType="VarChar(6) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="paymentType" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="senderName" Type="System.String" DbType="VarChar(40)" CanBeNull="true" />
+      <Column Name="receiveName" Type="System.String" DbType="VarChar(40)" CanBeNull="true" />
+      <Column Name="paymentDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="custID" Type="System.String" DbType="VarChar(6)" CanBeNull="true" />
+      <Association Name="Customer_Payment" Member="Customer" ThisKey="custID" OtherKey="custID" Type="Customer" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Staff" Member="Staffs">
+    <Type Name="Staff">
+      <Column Name="staffID" Type="System.String" DbType="VarChar(6) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="staffName" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="password" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TransactionH" Member="TransactionHs">
+    <Type Name="TransactionH">
+      <Column Name="transactionID" Type="System.String" DbType="VarChar(6) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="date" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="amount" Type="System.Decimal" DbType="Decimal(7,2)" CanBeNull="true" />
+      <Column Name="transactionType" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="accountID" Type="System.String" DbType="VarChar(6)" CanBeNull="true" />
+      <Association Name="Account_TransactionH" Member="Account" ThisKey="accountID" OtherKey="accountID" Type="Account" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>
